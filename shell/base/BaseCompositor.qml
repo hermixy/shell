@@ -24,6 +24,7 @@
 
 import QtQuick 2.5
 import GreenIsland 1.0 as GreenIsland
+import GreenIsland.Client 1.0
 
 GreenIsland.WaylandCompositor {
     id: compositor
@@ -36,12 +37,28 @@ GreenIsland.WaylandCompositor {
     readonly property alias outputs: __private.outputs
     readonly property alias primaryScreen: screenManager.primaryScreen
 
+    readonly property alias cursorTheme: cursorTheme
+
     property alias __private: __private
 
     QtObject {
         id: __private
 
         property variant outputs: []
+    }
+
+    WaylandCursorTheme {
+        id: cursorTheme
+        connection: WaylandConnection {
+            id: clientConnection
+            socketName: compositor.socketName
+            onConnected: cursorTheme.shape = WaylandCursorTheme.ArrowCursor
+
+            Connections {
+                target: compositor
+                onCreatedChanged: clientConnection.start()
+            }
+        }
     }
 
     Shortcut {

@@ -27,6 +27,7 @@ import QtGraphicalEffects 1.0
 import QtQuick.Controls 2.0
 import QtQuick.Controls.Material 2.0
 import GreenIsland 1.0 as GreenIsland
+import GreenIsland.Client 1.0
 import Fluid.Controls 1.0
 import Hawaii.Desktop 1.0
 import ".."
@@ -163,6 +164,20 @@ Item {
         id: workspace
         anchors.fill: parent
         z: 6
+
+        MouseArea {
+            anchors.fill: parent
+            acceptedButtons: Qt.NoButton
+            hoverEnabled: true
+            onEntered: {
+                compositor.cursorTheme.shape = WaylandCursorTheme.ArrowCursor
+                console.warn("................... cursor")
+            }
+            onExited: {
+                compositor.cursorTheme.shape = WaylandCursorTheme.BlankCursor
+                console.warn("................... exit cursor")
+            }
+        }
     }
 
     // Panels

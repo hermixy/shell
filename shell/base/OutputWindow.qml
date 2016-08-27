@@ -49,6 +49,7 @@ Window {
     GreenIsland.WaylandMouseTracker {
         id: localPointerTracker
         anchors.fill: parent
+        windowSystemCursorEnabled: false
 
         Loader {
             id: screenViewLoader

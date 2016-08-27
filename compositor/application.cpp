@@ -121,6 +121,8 @@ void Application::startup()
     QWaylandCompositor *compositor = qobject_cast<QWaylandCompositor *>(rootObject);
     if (compositor)
         m_launcher->setWaylandSocketName(QString::fromUtf8(compositor->socketName()));
+    if (compositor)
+qputenv("WAYLAND_DISPLAY", compositor->socketName());
 
     // Launch autostart applications
     autostart();

@@ -70,7 +70,7 @@ static void setupEnvironment()
     qputenv("QT_QUICK_CONTROLS_1_STYLE", QByteArrayLiteral("Flat"));
     qputenv("QT_QUICK_CONTROLS_STYLE", QByteArrayLiteral("material"));
     qputenv("QT_WAYLAND_DECORATION", QByteArrayLiteral("HawaiiMaterialDecoration"));
-    qputenv("XCURSOR_THEME", QByteArrayLiteral("hawaii"));
+    qputenv("XCURSOR_THEME", QByteArrayLiteral("Adwaita"));
     qputenv("XCURSOR_SIZE", QByteArrayLiteral("16"));
     qputenv("XDG_MENU_PREFIX", QByteArrayLiteral("hawaii-"));
     qputenv("XDG_CURRENT_DESKTOP", QByteArrayLiteral("X-Hawaii"));
