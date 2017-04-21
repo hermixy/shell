@@ -40,6 +40,8 @@ ChromeItem {
 
     property rect taskIconGeometry: Qt.rect(0, 0, 32, 32)
 
+    property string iconName: "unknown"
+
     x: shellSurfaceItem.moveItem.x - shellSurfaceItem.output.position.x
     y: shellSurfaceItem.moveItem.y - shellSurfaceItem.output.position.y
     width: shellSurfaceItem.width
@@ -67,6 +69,17 @@ ChromeItem {
             origin.y: chrome.y - shellSurfaceItem.output.position.y - shellSurfaceItem.height
         }
     ]
+
+    Connections {
+        target: shellSurface
+        onAppIdChanged: console.warn("*******************************************************", appId)
+        onCanonicalAppIdChanged: {
+            // Set icon name when appId changes
+            console.warn(shellSurface.canonicalAppId);
+            var appIconName = applicationManager.getIconName(shellSurface.canonicalAppId);
+            chrome.iconName = appIconName ? appIconName : "unknown";
+        }
+    }
 
     QtObject {
         id: __private

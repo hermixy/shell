@@ -585,8 +585,40 @@ WaylandCompositor {
 
     XWayland {
         id: xwayland
-        enabled: false
+        enabled: true
+        onShellSurfaceRequested: {
+            var shellSurface = xwaylandShellSurfaceComponent.createObject(xwayland);
+            shellSurface.initialize(xwayland, surface, resource);
+        }
         onShellSurfaceCreated: __private.handleShellSurfaceCreated(shellSurface, xchromeComponent)
+    }
+
+    Component {
+        id: xwaylandShellSurfaceComponent
+
+        XWaylandShellSurface {
+            id: xwaylandShellSurface
+
+            property string canonicalAppId: applicationManager.canonicalizeAppId(appId)
+
+            QtObject {
+                id: details
+
+                property bool mapped: false
+                property bool registered: false
+                property bool responsive: true
+            }
+
+            onCanonicalAppIdChanged: {
+                if (!details.registered && canonicalAppId) {
+                    applicationManager.registerShellSurface(xwaylandShellSurface);
+                    details.registered = true;
+
+                    if (activated)
+                        applicationManager.focusShellSurface(xwaylandShellSurface);
+                }
+            }
+        }
     }
 
     Component {
