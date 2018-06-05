@@ -33,7 +33,7 @@
  */
 
 OutputConfigurationPrivate::OutputConfigurationPrivate(OutputConfiguration *self)
-    : QtWaylandServer::liri_outputconfiguration()
+    : QtWaylandServer::org_kde_kwin_outputconfiguration()
     , management(nullptr)
     , q_ptr(self)
 {
@@ -68,7 +68,7 @@ void OutputConfigurationPrivate::clearPendingChanges()
     changes.clear();
 }
 
-void OutputConfigurationPrivate::liri_outputconfiguration_enable(Resource *resource,
+void OutputConfigurationPrivate::org_kde_kwin_outputconfiguration_enable(Resource *resource,
                                                                  struct ::wl_resource *outputResource,
                                                                  int32_t enable)
 {
@@ -77,16 +77,7 @@ void OutputConfigurationPrivate::liri_outputconfiguration_enable(Resource *resou
     OutputChangesetPrivate::get(pendingChanges(output))->enabled = enable == 1;
 }
 
-void OutputConfigurationPrivate::liri_outputconfiguration_primary(Resource *resource,
-                                                                  struct ::wl_resource *outputResource,
-                                                                  int32_t primary)
-{
-    Q_UNUSED(resource);
-    QWaylandOutput *output = QWaylandOutput::fromResource(outputResource);
-    OutputChangesetPrivate::get(pendingChanges(output))->primary = primary == 1;
-}
-
-void OutputConfigurationPrivate::liri_outputconfiguration_mode(Resource *resource,
+void OutputConfigurationPrivate::org_kde_kwin_outputconfiguration_mode(Resource *resource,
                                                                struct ::wl_resource *outputResource,
                                                                int32_t mode_id)
 {
@@ -95,7 +86,7 @@ void OutputConfigurationPrivate::liri_outputconfiguration_mode(Resource *resourc
     OutputChangesetPrivate::get(pendingChanges(output))->modeId = mode_id;
 }
 
-void OutputConfigurationPrivate::liri_outputconfiguration_transform(Resource *resource,
+void OutputConfigurationPrivate::org_kde_kwin_outputconfiguration_transform(Resource *resource,
                                                                     struct ::wl_resource *outputResource,
                                                                     int32_t wlTransform)
 {
@@ -106,7 +97,7 @@ void OutputConfigurationPrivate::liri_outputconfiguration_transform(Resource *re
     OutputChangesetPrivate::get(pendingChanges(output))->transform = transform;
 }
 
-void OutputConfigurationPrivate::liri_outputconfiguration_position(Resource *resource,
+void OutputConfigurationPrivate::org_kde_kwin_outputconfiguration_position(Resource *resource,
                                                                    struct ::wl_resource *outputResource,
                                                                    int32_t x, int32_t y)
 {
@@ -115,7 +106,7 @@ void OutputConfigurationPrivate::liri_outputconfiguration_position(Resource *res
     OutputChangesetPrivate::get(pendingChanges(output))->position = QPoint(x, y);
 }
 
-void OutputConfigurationPrivate::liri_outputconfiguration_scale(Resource *resource,
+void OutputConfigurationPrivate::org_kde_kwin_outputconfiguration_scale(Resource *resource,
                                                                 struct ::wl_resource *outputResource,
                                                                 int32_t scale)
 {
@@ -124,7 +115,7 @@ void OutputConfigurationPrivate::liri_outputconfiguration_scale(Resource *resour
     OutputChangesetPrivate::get(pendingChanges(output))->scaleFactor = scale;
 }
 
-void OutputConfigurationPrivate::liri_outputconfiguration_apply(Resource *resource)
+void OutputConfigurationPrivate::org_kde_kwin_outputconfiguration_apply(Resource *resource)
 {
     Q_UNUSED(resource);
 
@@ -200,7 +191,7 @@ OutputConfiguration *OutputConfiguration::fromResource(wl_resource *resource)
     OutputConfigurationPrivate::Resource *res =
             OutputConfigurationPrivate::Resource::fromResource(resource);
     if (res)
-        return static_cast<OutputConfigurationPrivate *>(res->liri_outputconfiguration_object)->q_func();
+        return static_cast<OutputConfigurationPrivate *>(res->org_kde_kwin_outputconfiguration_object)->q_func();
     return nullptr;
 }
 

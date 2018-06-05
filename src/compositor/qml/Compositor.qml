@@ -140,15 +140,11 @@ WaylandCompositor {
             subpixel: screenItem.subpixel
             transform: screenItem.transform
             scaleFactor: screenItem.scaleFactor
+            modes: screenItem.modes
             currentModeIndex: screenItem.currentModeIndex
             preferredModeIndex: screenItem.preferredModeIndex
 
             Component.onCompleted: {
-                // Add modes
-                var sourceModes = screenManager.screenModel.get(index).modes;
-                for (var i = 0; i < sourceModes.length; i++)
-                    modes.push(sourceModes[i]);
-
                 // Set default output the first time
                 if (!liriCompositor.defaultOutput)
                     liriCompositor.defaultOutput = this;

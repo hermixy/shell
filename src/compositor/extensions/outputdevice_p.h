@@ -21,11 +21,11 @@
  * $END_LICENSE$
  ***************************************************************************/
 
-#ifndef LIRI_OUTPUTMANAGEMENT_P_H
-#define LIRI_OUTPUTMANAGEMENT_P_H
+#ifndef LIRI_OUTPUTDEVICE_P_H
+#define LIRI_OUTPUTDEVICE_P_H
 
-#include "extensions/outputmanagement.h"
-#include "qwayland-server-outputmanagement.h"
+#include "outputdevice.h"
+#include "qwayland-server-outputdevice.h"
 
 //
 //  W A R N I N G
@@ -38,22 +38,38 @@
 // We mean it.
 //
 
-class OutputManagementPrivate : public QtWaylandServer::org_kde_kwin_outputmanagement
+class OutputDevicePrivate : public QtWaylandServer::org_kde_kwin_outputdevice
 {
-    Q_DECLARE_PUBLIC(OutputManagement)
 public:
-    OutputManagementPrivate(OutputManagement *self);
+    OutputDevicePrivate();
 
-    void removeConfiguration(OutputConfiguration *configuration);
+    int32_t toSubpixel() const;
+    int32_t toTransform() const;
 
-    QVector<OutputConfiguration *> configurations;
+    void sendGeometry(wl_resource *resource);
+    void sendModes(wl_resource *resource);
+    void updateGeometry();
+    void updateScale();
+    void updateModes();
 
-    static OutputManagementPrivate *get(OutputManagement *management) { return management->d_func(); }
+    bool initialized = false;
+    QWaylandCompositor *compositor = nullptr;
+    QString uuid;
+    bool enabled = true;
+    QString manufacturer = QLatin1String("Unknown");
+    QString model = QLatin1String("Unknown");
+    QString edid;
+    QSize physicalSize;
+    QPoint position;
+    QWaylandOutput::Subpixel subpixel = QWaylandOutput::SubpixelUnknown;
+    QWaylandOutput::Transform transform = QWaylandOutput::TransformNormal;
+    int scaleFactor = 1;
+    QVector<ScreenMode *> modes;
+    int currentModeIndex = 0;
+    int preferredModexIndex = 0;
 
 protected:
-    OutputManagement *q_ptr;
-
-    virtual void org_kde_kwin_outputmanagement_create_configuration(Resource *resource, uint32_t id) override;
+    void org_kde_kwin_outputdevice_bind_resource(Resource *resource) override;
 };
 
-#endif // LIRI_OUTPUTMANAGEMENT_P_H
+#endif // LIRI_OUTPUTDEVICE_P_H

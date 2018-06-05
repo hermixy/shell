@@ -35,7 +35,7 @@
  */
 
 OutputManagementPrivate::OutputManagementPrivate(OutputManagement *self)
-    : QtWaylandServer::liri_outputmanagement()
+    : QtWaylandServer::org_kde_kwin_outputmanagement()
     , q_ptr(self)
 {
 }
@@ -45,13 +45,13 @@ void OutputManagementPrivate::removeConfiguration(OutputConfiguration *configura
     configurations.removeOne(configuration);
 }
 
-void OutputManagementPrivate::liri_outputmanagement_create_configuration(Resource *resource, uint32_t id)
+void OutputManagementPrivate::org_kde_kwin_outputmanagement_create_configuration(Resource *resource, uint32_t id)
 {
     Q_Q(OutputManagement);
 
     QWaylandResource configurationResource(
                 wl_resource_create(resource->client(),
-                                   &liri_outputconfiguration_interface,
+                                   &org_kde_kwin_outputconfiguration_interface,
                                    wl_resource_get_version(resource->handle),
                                    id));
 

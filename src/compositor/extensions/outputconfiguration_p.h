@@ -28,7 +28,7 @@
 #include <QWaylandOutput>
 
 #include "extensions/outputconfiguration.h"
-#include "qwayland-server-liri-outputmanagement.h"
+#include "qwayland-server-outputmanagement.h"
 
 //
 //  W A R N I N G
@@ -43,7 +43,7 @@
 
 class OutputChangeset;
 
-class OutputConfigurationPrivate : public QtWaylandServer::liri_outputconfiguration
+class OutputConfigurationPrivate : public QtWaylandServer::org_kde_kwin_outputconfiguration
 {
     Q_DECLARE_PUBLIC(OutputConfiguration)
 public:
@@ -61,25 +61,22 @@ public:
 protected:
     OutputConfiguration *q_ptr;
 
-    void liri_outputconfiguration_enable(Resource *resource,
-                                         struct ::wl_resource *outputResource,
-                                         int32_t enable) override;
-    void liri_outputconfiguration_primary(Resource *resource,
-                                          struct ::wl_resource *outputResource,
-                                          int32_t primary) override;
-    void liri_outputconfiguration_mode(Resource *resource,
-                                       struct ::wl_resource *outputResource,
-                                       int32_t mode_id) override;
-    void liri_outputconfiguration_transform(Resource *resource,
-                                            struct ::wl_resource *outputResource,
-                                            int32_t wlTransform) override;
-    void liri_outputconfiguration_position(Resource *resource,
-                                           struct ::wl_resource *outputResource,
-                                           int32_t x, int32_t y) override;
-    void liri_outputconfiguration_scale(Resource *resource,
-                                        struct ::wl_resource *outputResource,
-                                        int32_t scale) override;
-    void liri_outputconfiguration_apply(Resource *resource) override;
+    void org_kde_kwin_outputconfiguration_enable(Resource *resource,
+                                                 struct ::wl_resource *outputResource,
+                                                 int32_t enable) override;
+    void org_kde_kwin_outputconfiguration_mode(Resource *resource,
+                                               struct ::wl_resource *outputResource,
+                                               int32_t mode_id) override;
+    void org_kde_kwin_outputconfiguration_transform(Resource *resource,
+                                                    struct ::wl_resource *outputResource,
+                                                    int32_t wlTransform) override;
+    void org_kde_kwin_outputconfiguration_position(Resource *resource,
+                                                   struct ::wl_resource *outputResource,
+                                                   int32_t x, int32_t y) override;
+    void org_kde_kwin_outputconfiguration_scale(Resource *resource,
+                                                struct ::wl_resource *outputResource,
+                                                int32_t scale) override;
+    void org_kde_kwin_outputconfiguration_apply(Resource *resource) override;
 };
 
 #endif // LIRI_OUTPUTCONFIGURATION_P_H

@@ -9,7 +9,7 @@ QtGuiApplication {
     Depends { name: "GitRevision" }
     Depends {
         name: "Qt"
-        submodules: ["core", "core-private", "concurrent", "dbus", "gui", "gui-private", "svg", "qml", "quick", "quickcontrols2", "waylandcompositor"]
+        submodules: ["core", "core-private", "concurrent", "dbus", "gui", "gui-private", "svg", "qml", "quick", "quickcontrols2", "waylandcompositor", "waylandcompositor-private"]
         versionAtLeast: project.minimumQtVersion
     }
     Depends { name: "sigwatch" }
@@ -86,6 +86,9 @@ QtGuiApplication {
         "extensions/outputconfiguration.cpp",
         "extensions/outputconfiguration.h",
         "extensions/outputconfiguration_p.h",
+        "extensions/outputdevice.cpp",
+        "extensions/outputdevice.h",
+        "extensions/outputdevice_p.h",
         "extensions/outputmanagement.cpp",
         "extensions/outputmanagement.h",
         "extensions/outputmanagement_p.h",
@@ -219,7 +222,8 @@ QtGuiApplication {
         name: "Wayland Protocols"
         files: [
             "../../data/protocols/gtk-shell.xml",
-            "../../data/protocols/liri-outputmanagement.xml",
+            "../../data/protocols/outputdevice.xml",
+            "../../data/protocols/outputmanagement.xml",
         ]
         fileTags: ["wayland.server.protocol"]
     }

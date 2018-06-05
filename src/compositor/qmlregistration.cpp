@@ -36,6 +36,7 @@
 #include "extensions/gtkshell.h"
 #include "extensions/outputchangeset.h"
 #include "extensions/outputconfiguration.h"
+#include "extensions/outputdevice.h"
 #include "extensions/outputmanagement.h"
 #include "extensions/quickoutputconfiguration.h"
 
@@ -85,6 +86,7 @@ Q_COMPOSITOR_DECLARE_QUICK_PARENT_CLASS(QWaylandXdgSurfaceV5)
 Q_COMPOSITOR_DECLARE_QUICK_PARENT_CLASS(QWaylandXdgPopupV5)
 Q_COMPOSITOR_DECLARE_QUICK_EXTENSION_CLASS(GtkShell)
 Q_COMPOSITOR_DECLARE_QUICK_PARENT_CLASS(GtkSurface)
+Q_COMPOSITOR_DECLARE_QUICK_PARENT_CLASS(OutputDevice)
 Q_COMPOSITOR_DECLARE_QUICK_EXTENSION_CLASS(OutputManagement)
 
 void registerPrivateTypes()
@@ -116,6 +118,7 @@ void registerPrivateTypes()
     qmlRegisterType<GtkSurfaceQuickParent>(uri, versionMajor, versionMinor, "GtkSurface");
 
     qmlRegisterType<QuickOutputConfiguration>(uri, versionMajor, versionMinor, "OutputConfiguration");
+    qmlRegisterType<OutputDeviceQuickParent>(uri, versionMajor, versionMinor, "OutputDevice");
     qmlRegisterUncreatableType<OutputManagement>(uri, versionMajor, versionMinor, "OutputManagementBase",
                                                  QLatin1String("Cannot create instance of OutputManagementBase, use OutputManagement instead"));
     qmlRegisterType<OutputManagementQuickExtension>(uri, versionMajor, versionMinor, "OutputManagement");

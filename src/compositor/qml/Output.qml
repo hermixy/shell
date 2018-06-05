@@ -160,6 +160,23 @@ P.WaylandOutput {
         }
     }
 
+    P.OutputDevice {
+        id: outputDevice
+
+        compositor: output.compositor
+        uuid: outputSettings.uuid
+        manufacturer: output.manufacturer
+        model: output.model
+        position: output.position
+        physicalSize: output.physicalSize
+        subpixel: output.subpixel
+        transform: output.transform
+        scaleFactor: output.scaleFactor
+        modes: output.modes
+        currentModeIndex: output.currentModeIndex
+        preferredModeIndex: output.preferredModeIndex
+    }
+
     P.WaylandOutputSettings {
         id: outputSettings
     }

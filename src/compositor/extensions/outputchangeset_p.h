@@ -25,7 +25,6 @@
 #define LIRI_OUTPUTCHANGESET_P_H
 
 #include "outputchangeset.h"
-#include "qwayland-server-liri-outputmanagement.h"
 
 //
 //  W A R N I N G
