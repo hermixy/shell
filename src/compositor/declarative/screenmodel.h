@@ -129,7 +129,16 @@ class ScreenItem : public QObject
     Q_PROPERTY(QQmlListProperty<ScreenMode> modes READ modes CONSTANT)
     Q_PROPERTY(int currentModeIndex READ currentModeIndex NOTIFY currentModeIndexChanged)
     Q_PROPERTY(int preferredModeIndex READ preferredModeIndex CONSTANT)
+    Q_PROPERTY(PowerState powerState READ powerState WRITE setPowerState NOTIFY powerStateChanged)
 public:
+    enum PowerState {
+        PowerStateOn,
+        PowerStateStandby,
+        PowerStateSuspend,
+        PowerStateOff
+    };
+    Q_ENUM(PowerState)
+
     explicit ScreenItem(QObject *parent = nullptr);
     ~ScreenItem();
 
@@ -153,12 +162,16 @@ public:
     int currentModeIndex() const;
     int preferredModeIndex() const;
 
+    PowerState powerState() const;
+    void setPowerState(PowerState state);
+
 Q_SIGNALS:
     void primaryChanged();
     void geometryChanged();
     void physicalSizeChanged();
     void transformChanged();
     void currentModeIndexChanged();
+    void powerStateChanged();
 
 private:
     friend class ScreenModel;
@@ -176,6 +189,7 @@ private:
     int m_currentMode = 0;
     int m_preferredMode = 0;
     QVector<ScreenMode *> m_modes;
+    PowerState m_powerState = PowerStateOn;
 };
 
 QML_DECLARE_TYPE(ScreenItem)

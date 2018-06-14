@@ -157,6 +157,40 @@ int ScreenItem::preferredModeIndex() const
     return m_preferredMode;
 }
 
+ScreenItem::PowerState ScreenItem::powerState() const
+{
+    return m_powerState;
+}
+
+void ScreenItem::setPowerState(ScreenItem::PowerState state)
+{
+    if (!m_screen) {
+        qCWarning(lcShell) << "ScreenItem cannot set power state if the screen property is not set";
+        return;
+    }
+
+    if (m_powerState == state)
+        return;
+
+    switch (state) {
+    case PowerStateOn:
+        m_screen->handle()->setPowerState(QPlatformScreen::PowerStateOn);
+        break;
+    case PowerStateStandby:
+        m_screen->handle()->setPowerState(QPlatformScreen::PowerStateStandby);
+        break;
+    case PowerStateSuspend:
+        m_screen->handle()->setPowerState(QPlatformScreen::PowerStateSuspend);
+        break;
+    case PowerStateOff:
+        m_screen->handle()->setPowerState(QPlatformScreen::PowerStateOff);
+        break;
+    }
+
+    m_powerState = state;
+    Q_EMIT powerStateChanged();
+}
+
 /*
  * ScreenModel
  */
@@ -504,6 +538,21 @@ void ScreenModel::handleScreenAdded(QScreen *screen)
     }
     item->m_currentMode = screen->handle()->currentMode();
     item->m_preferredMode = screen->handle()->preferredMode();
+
+    switch (screen->handle()->powerState()) {
+    case QPlatformScreen::PowerStateOn:
+        item->m_powerState = ScreenItem::PowerStateOn;
+        break;
+    case QPlatformScreen::PowerStateStandby:
+        item->m_powerState = ScreenItem::PowerStateStandby;
+        break;
+    case QPlatformScreen::PowerStateSuspend:
+        item->m_powerState = ScreenItem::PowerStateSuspend;
+        break;
+    case QPlatformScreen::PowerStateOff:
+        item->m_powerState = ScreenItem::PowerStateOff;
+        break;
+    }
 
     connect(screen, &QScreen::availableGeometryChanged, this, [this, item](const QRect &geometry) {
         int row = m_items.indexOf(item);
