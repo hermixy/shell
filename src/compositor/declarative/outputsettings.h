@@ -31,6 +31,7 @@ class OutputSettings : public QObject, public QQmlParserStatus
 {
     Q_OBJECT
     Q_PROPERTY(QScreen *screen READ screen WRITE setScreen NOTIFY screenChanged)
+    Q_PROPERTY(QString uuid READ uuid NOTIFY uuidChanged)
     Q_PROPERTY(PowerState powerState READ powerState WRITE setPowerState NOTIFY powerStateChanged)
     Q_INTERFACES(QQmlParserStatus)
 public:
@@ -47,11 +48,14 @@ public:
     QScreen *screen() const;
     void setScreen(QScreen *screen);
 
+    QString uuid() const;
+
     PowerState powerState() const;
     void setPowerState(PowerState state);
 
 Q_SIGNALS:
     void screenChanged();
+    void uuidChanged();
     void powerStateChanged();
 
 protected:
@@ -61,5 +65,6 @@ protected:
 private:
     bool m_initialized = false;
     QScreen *m_screen = nullptr;
+    QString m_uuid;
     PowerState m_powerState = PowerStateOn;
 };

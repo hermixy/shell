@@ -21,6 +21,7 @@
  * $END_LICENSE$
  ***************************************************************************/
 
+#include <QCryptographicHash>
 #include <qpa/qplatformscreen.h>
 
 #include "logging_p.h"
@@ -48,6 +49,18 @@ void OutputSettings::setScreen(QScreen *screen)
 
     m_screen = screen;
     Q_EMIT screenChanged();
+
+    // Calculate UUID
+    QCryptographicHash hash(QCryptographicHash::Md5);
+    hash.addData(screen->manufacturer().toUtf8());
+    hash.addData(screen->model().toUtf8());
+    m_uuid = hash.result().toHex().left(10);
+    Q_EMIT uuidChanged();
+}
+
+QString OutputSettings::uuid() const
+{
+    return m_uuid;
 }
 
 OutputSettings::PowerState OutputSettings::powerState() const
